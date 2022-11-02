@@ -10,6 +10,7 @@ public:
 	IntArray();
 	IntArray(int);
 	IntArray(const IntArray&);
+	IntArray(int*, int);
 	~IntArray();
 	int getSize();
 	void setSize(int);
@@ -18,7 +19,10 @@ public:
 	IntArray getArray();
 	void setArray(int*, int);
 	void operator=(const IntArray);
+	// Bracket operator []
 	int operator[](int);
+	// Type-casting operator (int*)
+	operator int* () const;
 	friend istream& operator>>(istream& in, IntArray& temp);
 	friend ostream& operator<<(ostream& out, IntArray& temp);
 };

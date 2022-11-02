@@ -18,10 +18,38 @@ IntArray::IntArray(const IntArray&temp)
 	for (int i = 0; i < size; i++)
 		arr[i] = temp.arr[i];
 }
+IntArray::IntArray(int* a , int _size) {
+	size = _size;
+	arr = new int[_size];
+	for (int i = 0; i < size; i++,a++)
+		arr[i] = *a;
+}
 IntArray::~IntArray()
 {
 	size = 0;
 	delete[]arr;
+}
+int IntArray::getAt(int pos)
+{
+	if (pos < 0 || pos >= size)
+	{
+		cout << "Invalid position" << endl;
+		return -1;
+	}
+	return arr[pos];
+}
+void IntArray::setAt(int pos, int val)
+{
+	if (pos < 0 || pos >= size)
+	{
+		cout << "Invalid position" << endl;
+		return;
+	}
+	arr[pos] = val;
+}
+int IntArray::getSize()
+{
+	return size;
 }
 void IntArray::setSize(int k)
 {
@@ -44,6 +72,21 @@ void IntArray::setSize(int k)
 		delete[] temp;
 	}
 	size = k;
+}
+IntArray IntArray::getArray()
+{
+	IntArray temp;
+	temp.setSize(size);
+	for (int i = 0; i < temp.size; i++)
+		temp.arr[i] = arr[i];
+	return temp;
+}
+void IntArray::setArray(int *k, int t)
+{
+	size = t;
+	arr = new int[size];
+	for (int i = 0; i < t; i++)
+		arr[i] = k[i];
 }
 istream& operator>>(istream& in, IntArray& temp)
 {
@@ -70,24 +113,6 @@ ostream& operator<<(ostream& out, IntArray& temp)
 		out << temp.arr[i] << " ";
 	return out;
 }
-int IntArray::getAt(int pos)
-{
-	if (pos < 0 || pos >= size)
-	{
-		cout << "Invalid position" << endl;
-		return -1;
-	}
-	return arr[pos];
-}
-void IntArray::setAt(int pos, int val)
-{
-	if (pos < 0 || pos >= size)
-	{
-		cout << "Invalid position" << endl;
-		return;
-	}
-	arr[pos] = val;
-}
 void IntArray::operator=(const IntArray temp)
 {
 	setSize(temp.size);
@@ -95,26 +120,16 @@ void IntArray::operator=(const IntArray temp)
 	for (int i = 0; i < size; i++)
 		arr[i] = temp.arr[i];
 }
+
 int IntArray::operator[](int k)
 {
+	if (k >= size && k < 0) {
+		cout << "Invalid position ";
+		return -1;
+	}
 	return arr[k];
 }
-int IntArray::getSize()
+IntArray::operator int *()const
 {
-	return size;
-}
-IntArray IntArray::getArray()
-{
-	IntArray temp;
-	temp.setSize(size);
-	for (int i = 0; i < temp.size; i++)
-		temp.arr[i] = arr[i];
-	return temp;
-}
-void IntArray::setArray(int *k, int t)
-{
-	size = t;
-	arr = new int[size];
-	for (int i = 0; i < t; i++)
-		arr[i] = k[i];
+	return arr;
 }
